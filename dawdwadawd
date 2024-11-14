@@ -1,0 +1,319 @@
+-- Utility function to set tool names
+local function setToolName(buttonName, newName)
+    local player = game.Players.LocalPlayer
+    local playerGui = player.PlayerGui
+    local hotbar = playerGui:FindFirstChild("Hotbar")
+    local backpack = hotbar and hotbar:FindFirstChild("Backpack")
+    local hotbarFrame = backpack and backpack:FindFirstChild("Hotbar")
+    local baseButton = hotbarFrame and hotbarFrame:FindFirstChild(buttonName)
+    
+    if baseButton then
+        local ToolName = baseButton:FindFirstChild("ToolName")
+        if ToolName then
+            ToolName.Text = newName
+        end
+    end
+end
+
+-- Set tool names
+setToolName("1", "NOT WORKED ON")
+setToolName("2", "FlipHIT")
+setToolName("3", "NOT WORKED ON")
+setToolName("4", "NOT WORKED ON")
+
+-- Function to handle GUI updates
+local function findGuiAndSetText()
+    local player = game.Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+    local screenGui = playerGui:FindFirstChild("ScreenGui")
+    
+    if screenGui then
+        local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+        if magicHealthFrame then
+            local textLabel = magicHealthFrame:FindFirstChild("TextLabel")
+            if textLabel then
+                textLabel.Text = "Red Activate..."
+            end
+        end
+    end
+end
+
+-- Update GUI text when added
+local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+playerGui.DescendantAdded:Connect(findGuiAndSetText)
+findGuiAndSetText()
+
+-- Function to handle animations
+local function onAnimationPlayed(animationTrack)
+    local animationId = tonumber(animationTrack.Animation.AnimationId:match("%d+"))
+    
+    -- List of animations and their replacements
+    local animationReplacements = {
+        [12273188754] = "rbxassetid://17799224866", -- flowing water YES -- 
+        [13603396939] = "rbxassetid://15943915877", -- preys perl attack YES -- 
+        [12467789963] = "rbxassetid://18464356233", -- ULTIMATE MOVE 2 YES -- 
+        [10479335397] = "rbxassetid://17838006839", -- dash YES -- 
+        [10470104242] = "rbxassetid://13294790250", -- downslam YES -- 
+        [12447247483] = "rbxassetid://14003607057", -- hunters grasp finisher YES -- 
+        [14798608838] = "rbxassetid://13813099821", -- leathal stream finisher YES -- 
+        [12296113986] = "rbxassetid://15145462680", -- leathal stream YES -- 
+        [12309835105] = "rbxassetid://16515850153", -- hunter grasp attack YES -- 
+        [12351854556] = "rbxassetid://17464923657", -- preys perl start anim YES -- 
+        [12307656616] = "rbxassetid://16431491215", -- hunter grasp start anim YES -- 
+        [12296882427] = "rbxassetid://10471336737", -- leathel stream start anim YES -- 
+        [12272894215] = "rbxassetid://13501296372", -- flowing water start anim YES -- 
+        [13532562418] = "rbxassetid://17889458563", -- m1 YES -- 
+        [13532600125] = "rbxassetid://17889461810", -- m2 YES -- 
+        [13532604085] = "rbxassetid://17889471098", -- m3 YES -- 
+        [13294471966] = "rbxassetid://17889290569", -- m4 YES -- 
+        [12342141464] = "rbxassetid://56464564563", -- ULTIMATE YES -- 
+    }
+    
+    local replacementId = animationReplacements[animationId]
+    if replacementId then
+        -- Stop all animations
+        for _, animTrack in pairs(game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+        
+        -- Play replacement animation
+        local anim = Instance.new("Animation")
+        anim.AnimationId = replacementId
+        local newAnimTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(anim)
+        newAnimTrack:Play()
+        
+        -- Adjust animation settings
+        newAnimTrack:AdjustSpeed(0)
+        newAnimTrack.TimePosition = 0
+        newAnimTrack:AdjustSpeed(1)
+    end
+end
+
+-- Connect function to AnimationPlayed event
+local humanoid = game.Players.LocalPlayer.Character:WaitForChild("Humanoid")
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+-- Function to handle BodyVelocity
+local function onBodyVelocityAdded(bodyVelocity)
+    if bodyVelocity:IsA("BodyVelocity") then
+        bodyVelocity.Velocity = Vector3.new(bodyVelocity.Velocity.X, 0, bodyVelocity.Velocity.Z)
+    end
+end
+
+-- Monitor existing and new BodyVelocity instances
+local character = game.Players.LocalPlayer.Character
+for _, descendant in pairs(character:GetDescendants()) do
+    onBodyVelocityAdded(descendant)
+end
+
+character.DescendantAdded:Connect(onBodyVelocityAdded)
+
+-- Handle new character
+game.Players.LocalPlayer.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+    for _, descendant in pairs(character:GetDescendants()) do
+        onBodyVelocityAdded(descendant)
+    end
+end)
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("1").Base
+
+local ToolName = baseButton.ToolName
+
+
+ToolName.Text = "Kick Ravage"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("2").Base
+
+local ToolName = baseButton.ToolName
+
+
+ToolName.Text = "Blue Sweep"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("3").Base
+
+local ToolName = baseButton.ToolName
+
+
+ToolName.Text = "Smash Ruin"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("4").Base
+
+local ToolName = baseButton.ToolName
+
+
+ToolName.Text = "Blue Barrage"
+
+-- Services
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+-- Local Player
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- GUI and color adjustment function
+local function updateBarColor()
+    -- Find the ScreenGui on the screen
+    local screenGui = playerGui:FindFirstChild("ScreenGui")
+    if not screenGui then return end
+
+    -- Find the MagicHealth Frame
+    local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+    if not magicHealthFrame then return end
+
+    -- Find the Health Frame
+    local healthFrame = magicHealthFrame:FindFirstChild("Health")
+    if not healthFrame then return end
+
+    -- Find the Bar Frame
+    local barFrame = healthFrame:FindFirstChild("Bar")
+    if not barFrame then return end
+
+    -- Find the ImageLabel with ImageColor3 property inside the Bar Frame
+    local imageLabel = barFrame:FindFirstChild("Bar")
+    if not imageLabel or not imageLabel:IsA("ImageLabel") then return end
+
+    -- Set the color to yellow
+    imageLabel.ImageColor3 = Color3.fromRGB(255, 0, 0) -- RED -- 
+end
+
+-- Check the GUI again when the character resets
+local function onCharacterAdded(character)
+    -- Update the GUI
+    updateBarColor()
+end
+
+-- Check the local player's character
+local function onPlayerAdded()
+    local character = player.Character or player.CharacterAdded:Wait()
+    onCharacterAdded(character)
+
+    -- Check again when the character changes
+    player.CharacterAdded:Connect(onCharacterAdded)
+end
+
+-- Check when the player is added
+Players.PlayerAdded:Connect(onPlayerAdded)
+if player then
+    onPlayerAdded()
+end
+
+local UserInputService = game:GetService("UserInputService")
+
+-- Store the code as a string instead of executing it immediately
+local code = game:HttpGet("https://pastebin.com/raw/1BeBG2Ch")
+
+-- Detect key press
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.G then
+        -- Activate the code only when "G" is pressed
+        loadstring(code)()
+    end
+end)
+
+local UserInputService = game:GetService("UserInputService")
+
+-- Store the code as a string instead of executing it immediately
+local code = game:HttpGet("https://raw.githubusercontent.com/Shizl-ui/wadawdawdawd/refs/heads/main/adwadawdawdawd")
+
+-- Detect key press
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.Two then
+        -- Activate the code only when "2" is pressed
+        loadstring(code)()
+    end
+end)
+
+local UserInputService = game:GetService("UserInputService")
+
+-- Store the code for "4" as a string
+local codeForFour = game:HttpGet("https://raw.githubusercontent.com/Shizl-ui/wadwadwad/refs/heads/main/wadawd")
+
+-- Detect key press
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.Four then
+        -- Activate the code only when "4" is pressed
+        loadstring(codeForFour)()
+    end
+end)
+
+local UserInputService = game:GetService("UserInputService")
+local ContextActionService = game:GetService("ContextActionService")
+
+local keybindsDisabled = false  -- Start with keybinds enabled
+
+-- Function to disable keybinds 2 and 4
+local function disableKeybinds(input, gameProcessedEvent)
+    if gameProcessedEvent then return end
+
+    if keybindsDisabled then
+        if input.KeyCode == Enum.KeyCode.Two or input.KeyCode == Enum.KeyCode.Four then
+            return Enum.ContextActionResult.Sink  -- Block the key press
+        end
+    end
+    return Enum.ContextActionResult.Pass
+end
+
+-- Toggle keybinds with the "G" key and disable for 46 seconds
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent then return end
+
+    if input.KeyCode == Enum.KeyCode.G then
+        keybindsDisabled = true  -- Disable keybinds
+
+        -- Bind action to disable keys 2 and 4
+        ContextActionService:BindAction("DisableKeybinds", disableKeybinds, false, Enum.KeyCode.Two, Enum.KeyCode.Four)
+
+        print("Keybinds Disabled for 46 seconds")
+
+        -- Wait for 46 seconds, then re-enable keybinds
+        wait(46)
+
+        -- Unbind action and re-enable the keys
+        keybindsDisabled = false
+        ContextActionService:UnbindAction("DisableKeybinds")
+        print("Keybinds Re-enabled")
+    end
+end)
+
+-- For Garou --
